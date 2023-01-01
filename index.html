@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
-	<script src="script.js"></script>
+	<script src="script.js" defer></script>
     <title>JS Calculator</title>
 </head>
 <body>
@@ -22,29 +22,29 @@
 				<button class="btn btn-ctrl">m-</button>
 				<button class="btn btn-ctrl">mr</button>
 				
-				<button class="btn btn-op">C</button>
-				<button data-operation class="btn btn-op">÷</button>
-				<button data-operation class="btn btn-op">×</button>
-				<button class="btn btn-op">del</button>
+				<button id="btn-clear" class="btn btn-op">C</button>
+				<button data-operation data-write class="btn btn-op">÷</button>
+				<button data-operation data-write class="btn btn-op">✕</button>
+				<button id="btn-del" class="btn btn-op">del</button>
 
-				<button data-number class="btn btn-num">7</button>
-				<button data-number class="btn btn-num">8</button>
-				<button data-number class="btn btn-num">9</button>
-				<button data-operation class="btn btn-op">-</button>
+				<button data-number data-write class="btn btn-num">7</button>
+				<button data-number data-write class="btn btn-num">8</button>
+				<button data-number data-write class="btn btn-num">9</button>
+				<button data-operation data-write class="btn btn-op">-</button>
 
-				<button data-number class="btn btn-num">4</button>
-				<button data-number class="btn btn-num">5</button>
-				<button data-number class="btn btn-num">6</button>				
-				<button data-operation class="btn btn-op">+</button>
+				<button data-number data-write class="btn btn-num">4</button>
+				<button data-number data-write class="btn btn-num">5</button>
+				<button data-number data-write class="btn btn-num">6</button>				
+				<button data-operation data-write class="btn btn-op">+</button>
 
-				<button data-number class="btn btn-num">1</button>
-				<button data-number class="btn btn-num">2</button>
-				<button data-number class="btn btn-num">3</button>				
+				<button data-number data-write class="btn btn-num">1</button>
+				<button data-number data-write class="btn btn-num">2</button>
+				<button data-number data-write class="btn btn-num">3</button>				
 				<button data-equals class="span-row btn btn-eq">=</button>	
 
-				<button class="btn btn-num">%</button>
-				<button data-number class="btn btn-num">0</button>
-				<button data-number class="btn btn-num">.</button>				
+				<button data-write class="btn btn-num">%</button>
+				<button data-number data-write class="btn btn-num">0</button>
+				<button data-number data-write class="btn btn-num">.</button>				
 			</div>
             
         </div>
