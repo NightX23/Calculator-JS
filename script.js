@@ -6,21 +6,42 @@ class Calculator {
 	}
 	
 	clear(){
-
 		this.operationInput = '';
 		this.calculationScreen.innerText = this.operationInput;
+		this.answerScreen.innerText = this.operationInput;
 	}
 	
 	delete(){
 		this.operationInput = this.operationInput.slice(0, -1);
-		calculationScreen.innerHTML = this.operationInput;
-	}
-	
-	calculation(){
-		
+		this.calculationScreen.innerHTML = this.operationInput;
+		if(this.operationInput.length > 0)
+		this.inputFormatter(this.operationInput);
+		else
+		this.answerScreen.innerHTML=this.calculationScreen.innerHTML;
 	}
 
-	writeOperation(btn){ //Login optimization pending
+	inputFormatter(inputText){
+		let formatedText = inputText;
+		
+		formatedText = formatedText.replace(/✕/g, "*");
+		formatedText = formatedText.replace(/÷/g, "/");
+
+		this.calculation(formatedText);
+	}
+	
+	calculation(formatedText){
+
+		try {
+			this.answerScreen.innerText = eval(formatedText);
+			//this.answerScreen.innerText = formatedText;
+			
+		} catch (error) {
+			this.answerScreen.innerText = "";
+		}
+
+	}
+
+	writeOperation(btn){ //Logic optimization pending
 		let text = btn.innerText;
 		if(btn.hasAttribute("data-operation")){
 
@@ -39,6 +60,7 @@ class Calculator {
 	updateDisplay(text){
 		this.operationInput += text;
 		this.calculationScreen.innerText = this.operationInput;
+		this.inputFormatter(this.operationInput);
 	}
 }
 
