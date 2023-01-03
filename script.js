@@ -45,19 +45,28 @@ class Calculator {
 		let text = btn.innerText;
 		if(btn.hasAttribute("data-operation")){
 
-			if(this.operationInput.length<1){
+			if(this.operationInput.length<1)
 				text ="";
-			}
 
-			else if(signsRestrictions.includes(this.operationInput.slice(-1))){
+			else if(signsRestrictions.includes(this.operationInput.slice(-1)))
 				this.delete();
-			}
 		}
+
+		else if(text.slice(-1) == "." && actualDecimal == false)
+			text = "";
+
+		else if(text.slice(-1) == "." && actualDecimal == true)
+			actualDecimal = false;
+
+		if (signsRestrictions.includes(text) && text != "")
+			actualDecimal = true;
 
 		this.updateDisplay(text)
 	}
 
 	updateDisplay(text){
+
+		
 		this.operationInput += text;
 		this.calculationScreen.innerText = this.operationInput;
 		this.inputFormatter(this.operationInput);
@@ -76,6 +85,7 @@ const calculationScreen = document.querySelector('[data-calculation]');
 const answerScreen = document.querySelector('[data-answer]');
 
 const signsRestrictions = "%+-÷✕";
+let actualDecimal = true;
 
 const calculator = new Calculator(calculationScreen, answerScreen);
 
