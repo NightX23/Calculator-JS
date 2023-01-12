@@ -1,32 +1,26 @@
 class Calculator {
-	constructor (calculationScreen, answerScreen, operationInput=""){
+	constructor (calculationScreen, answerScreen, inputScreenText = "", calculationOutput = ""){
 		this.calculationScreen = calculationScreen;
 		this.answerScreen = answerScreen;
-		this.operationInput = operationInput;
+		this.inputScreenText = inputScreenText;
+		this.calculationOutput   = calculationOutput ; 
+
 	}
 	
 	clear(){
-		this.operationInput = '';
-		this.calculationScreen.innerText = this.operationInput;
-		this.answerScreen.innerText = this.operationInput;
+		this.inputScreenText = "";
+		this.calculationOutput   = "";
+		this.calculationScreen.innerText = this.inputScreenText;
+		this.answerScreen.innerText = this.calculationOutput ; 
 	}
 	
 	delete(){
-		this.operationInput = this.operationInput.slice(0, -1);
-		this.calculationScreen.innerHTML = this.operationInput;
-		if(this.operationInput.length > 0)
-		this.inputFormatter(this.operationInput);
+		this.inputScreenText = this.inputScreenText.slice(0, -1);
+		this.calculationScreen.innerText = this.inputScreenText;
+		if(this.inputScreenText.length > 0)
+		this.inputFormatter(this.inputScreenText);
 		else
-		this.answerScreen.innerHTML=this.calculationScreen.innerHTML;
-	}
-
-	inputFormatter(inputText){
-		let formatedText = inputText;
-		
-		formatedText = formatedText.replace(/✕/g, "*");
-		formatedText = formatedText.replace(/÷/g, "/");
-
-		this.calculation(formatedText);
+		this.answerScreen.innerText = this.calculationScreen.innerText;
 	}
 	
 	calculation(formatedText){
@@ -41,35 +35,52 @@ class Calculator {
 
 	}
 
+	equalsFunction(){
+		this.calculationScreen.innerText = this.answerScreen.innerText;
+		this.answerScreen.innerText = "";
+	}
+
 	writeOperation(btn){ //Logic optimization pending
-		let text = btn.innerText;
+		let calculationText = btn.value;
+		let showedText = calculationText;
+
+		if(btn.hasAttribute("data-expresion"))
+			showedText = btn.dataset.expresion;
+
 		if(btn.hasAttribute("data-operation")){
 
-			if(this.operationInput.length<1)
-				text ="";
+			if(this.inputScreenText.length < 1){
+				showedText ="";
+				ansText = "";
+			}
 
-			else if(signsRestrictions.includes(this.operationInput.slice(-1)))
+			else if(signsRestrictions.includes(this.inputScreenText.slice(-1)))
 				this.delete();
 		}
 
-		else if(text.slice(-1) == "." && actualDecimal == false)
-			text = "";
+		else if(showedText.slice(-1) == "." && actualDecimal == false)
+			showedText = "";
 
-		else if(text.slice(-1) == "." && actualDecimal == true)
+		else if(showedText.slice(-1) == "." && actualDecimal == true)
 			actualDecimal = false;
 
-		if (signsRestrictions.includes(text) && text != "")
-			actualDecimal = true;
+		if (signsRestrictions.includes(showedText) && showedText != "")
+			actualDecimal = true;		
 
-		this.updateDisplay(text)
+		if(btn.hasAttribute("data-equals") && this.calculationScreen.innerText != "")
+			this.equalsFunction();
+
+		this.updateDisplay(showedText, calculationText)
 	}
 
-	updateDisplay(text){
+	updateDisplay(showText, calcText){
 
+		this.inputScreenText += showText;
+		this.calculationOutput += calcText;
 		
-		this.operationInput += text;
-		this.calculationScreen.innerText = this.operationInput;
-		this.inputFormatter(this.operationInput);
+		this.calculationScreen.innerText = this.inputScreenText;
+		//this.inputFormatter(this.inputScreenText);
+		this.calculation(this.calculationOutput	);
 	}
 }
 
